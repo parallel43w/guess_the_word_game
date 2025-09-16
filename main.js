@@ -95,28 +95,17 @@ function showPopup(message, autoClose = true) {
   }
 }
 
-/**
- * Checks whether all inputs inside #input_fields are filled.
- * If they are, it builds a string from inputs and checks against the word list.
- * Returns true if match found, false otherwise.
- */
 function checkFilled() {
-  // If you have an element with id="body" and prefer it, you can use:
-  // const body = document.getElementById("body") || document.body;
   const body = document.body;
 
   const inputs = document.querySelectorAll("#input_fields input");
   if (!inputs || inputs.length === 0) return false;
 
-  // Make sure all are filled
   const allFilled = Array.from(inputs).every(input => input.value.trim() !== "");
   if (!allFilled) return false;
 
-  // Build the guessed string (trim each input and join)
   const input_str = Array.from(inputs).map(input => input.value.trim()).join("");
 
-  // Option A: If you keep an `originalWord` variable for the current round,
-  // prefer comparing with it:
   if (typeof originalWord !== "undefined" && originalWord !== null) {
     if (input_str.toLowerCase() === originalWord.toLowerCase()) {
       showPopup("You won!", true);
@@ -126,7 +115,6 @@ function checkFilled() {
     }
   }
 
-  // Option B: fallback — check against the `words` array
   if (Array.isArray(words) && words.includes(input_str)) {
     showPopup("You won!", true);
     return true;
